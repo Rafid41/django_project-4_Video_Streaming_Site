@@ -1,0 +1,49 @@
+{% extends 'navbar.html' %}
+
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+<div class="row">
+    <div class="col col-sm-9">
+        {% for video in video_list %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <h5><a href="{% url 'App_Videos:video_detail' pk=video.pk %}">{{ video.title }}<a/></h5>
+                    <h8><i><strong>Posted on:</strong> {{ video.upload_date }}  &nbsp; | &nbsp;   </i></h8>     <!-- <i> == italic-->
+                    <h8><i><strong>Posted By:</strong> <a href="#">@{{video.author}} </i></a></h8>
+                </li>
+            </ul>
+
+
+        {% endfor %}
+    </div>
+
+    <div class="col col-sm-3">
+        <form class="form-inline" method="GET">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search Video">
+            <br>
+            <button class="btn btn-success" type="submit">Search</button>
+        </form>
+        <br>
+        {% if results %}
+            {% for result in results %}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <p><a href="{% url 'App_Videos:video_detail' pk=result.pk %}">{{ result.title }}<a/></p>
+                </li>
+            </ul>
+            {% endfor %}
+
+        {% endif %}
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}

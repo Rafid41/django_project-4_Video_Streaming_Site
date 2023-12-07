@@ -1,0 +1,75 @@
+{% extends 'navbar.html' %}
+{% load embed_video_tags %}
+{% load crispy_forms_tags %}
+
+{% block title_block %} Home {% endblock %}
+{% block body_block %}
+
+
+
+        <div>
+            <h2>{{ video.title }}</h2>
+            <br>
+            <p><strong>Category:</strong> {{ video.category}}</p>
+            <br><br>
+            <center>
+                {% video video.link 'medium' %}
+                <br><br>
+                <p>{{ video.description|linebreaks }}</p>
+                <br><br>
+                <h6><strong>Posted by :</strong><a href="#">@{{ video.author }}</a></h6>
+                <h6><strong>Posted On :</strong> {{video.upload_date}}</h6>
+                <br>
+                <hr>
+                <h3>Comments</h3>
+            </center>
+            <hr>        
+        </div>
+
+        {% comment %} cooment {% endcomment %}
+        <div class='row'>
+            <div class='col-sm-6'>
+                <br>
+                {% for comment in video.video_comment.all %}
+
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <p>
+                                <a href="#">@{{comment.user}}<br></a>
+                                {{comment.comment}}<br>
+                                <h8>{{comment.comment_date}}</h8>
+                            </p>
+                        </li>
+                    </ul>
+
+
+
+
+                    {% comment %} <p>
+                        <a href="#">@{{comment.user}}<br></a>
+                            {{comment.comment}}<br>
+                            <h8>{{comment.comment_date}}</h8>
+                    </p> {% endcomment %}
+                {% endfor %}
+            </div>
+
+            <div class="col-sm-6">
+                {% if user.is_authenticated %}
+                    <form method="post">
+
+                        {{ comment_form|crispy}}
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-primary btn-sm">Comment</button>
+
+                    </form>
+                {% else %}
+                    <h5 style="color: red">Login to post Comment</h5>
+                {% endif %}
+            </div>
+        </div>
+ 
+
+
+
+{% endblock %}

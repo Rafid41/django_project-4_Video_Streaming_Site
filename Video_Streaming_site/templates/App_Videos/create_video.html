@@ -1,0 +1,19 @@
+{% extends 'navbar.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %} Post a Video {% endblock %}
+{% block body_block %}
+
+<center><h2>Post a Video</h2></center>
+
+<form method="post" enctype="multipart/form-data">
+
+    {{ form|crispy }}
+    {% csrf_token %}
+    <button type='submit' class='btn btn-success btn-sm'>Post</button>
+
+</form>
+
+
+
+
+{% endblock %}
